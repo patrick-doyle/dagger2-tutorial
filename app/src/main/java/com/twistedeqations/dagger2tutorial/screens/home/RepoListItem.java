@@ -1,6 +1,7 @@
 package com.twistedeqations.dagger2tutorial.screens.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,72 +21,69 @@ import butterknife.ButterKnife;
 
 public class RepoListItem extends FrameLayout {
 
-  @BindView(R.id.user_avatar_image)
-  ImageView avatar;
+    @BindView(R.id.user_avatar)
+    ImageView avatarImage;
 
-  @BindView(R.id.repo_name)
-  TextView name;
+    @BindView(R.id.repo_name)
+    TextView name;
 
-  @BindView(R.id.repo_description)
-  TextView description;
+    @BindView(R.id.repo_description)
+    TextView description;
 
-  @BindView(R.id.repo_stars)
-  TextView stars;
+    @BindView(R.id.repo_stars)
+    TextView stars;
 
-  @BindView(R.id.repo_issues)
-  TextView issues;
+    @BindView(R.id.repo_issues)
+    TextView issues;
 
-  @BindView(R.id.repo_forks)
-  TextView forks;
+    @BindView(R.id.repo_forks)
+    TextView forks;
 
-  @BindView(R.id.repo_updated_at)
-  TextView updatedAt;
+    @BindView(R.id.repo_updated_at)
+    TextView updatedAt;
 
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.fullDate();
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.fullDate();
 
-  public RepoListItem(Context context) {
-    super(context);
-    init();
-  }
+    public RepoListItem(Context context) {
+        super(context);
+        init();
+    }
 
-  public RepoListItem(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init();
-  }
+    public RepoListItem(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
-  public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init();
-  }
+    public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
-  public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-    init();
-  }
+    public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
 
-  private void init() {
-    inflate(getContext(), R.layout.repo_list_item, this);
-    ButterKnife.bind(this);
-  }
+    private void init() {
+        inflate(getContext(), R.layout.list_item_repo, this);
+        ButterKnife.bind(this);
+    }
 
-  public void setRepo(GithubRepo githubRepo) {
-    Locale locale = getResources().getConfiguration().locale;
+    public void setRepo(GithubRepo githubRepo) {
+        Locale locale = getResources().getConfiguration().locale;
 
-    name.setText(githubRepo.name);
-    description.setText(githubRepo.description);
+        name.setText(githubRepo.name);
+        description.setVisibility(TextUtils.isEmpty(githubRepo.description) ? GONE : VISIBLE);
+        description.setText(githubRepo.description);
 
-    stars.setText(String.format(locale, "%d", githubRepo.stargazersCount));
-    issues.setText(String.format(locale, "%d", githubRepo.openIssuesCount));
-    forks.setText(String.format(locale, "%d", githubRepo.forksCount));
+        stars.setText(String.format(locale, "%d", githubRepo.stargazersCount));
+        issues.setText(String.format(locale, "%d", githubRepo.openIssuesCount));
+        forks.setText(String.format(locale, "%d", githubRepo.forksCount));
 
-    updatedAt.setText(DATE_TIME_FORMATTER.print(githubRepo.updatedAt));
+        updatedAt.setText(DATE_TIME_FORMATTER.print(githubRepo.updatedAt));
 
-    Picasso.with(getContext())
-      .cancelRequest(avatar);
-
-    Picasso.with(getContext())
-      .load(githubRepo.owner.avatarUrl)
-      .fit()
-      .into(avatar);
-  }
+        Picasso.with(getContext())
+                .load(githubRepo.owner.avatarUrl)
+                .into(avatarImage);
+    }
 }

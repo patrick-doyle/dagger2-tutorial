@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
     githubService = GithubApplication.get(this).getGithubService();
 
-    reposCall = githubService.getReposForUser("TwistedEquations");
+    reposCall = githubService.getReposForUser("google");
     reposCall.enqueue(new Callback<List<GithubRepo>>() {
         @Override
         public void onResponse(Call<List<GithubRepo>> call, Response<List<GithubRepo>> response) {
