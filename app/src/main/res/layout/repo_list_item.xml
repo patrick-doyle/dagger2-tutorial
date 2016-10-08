@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <ImageView
+    android:id="@+id/user_avatar_image"
+    android:layout_width="75dp"
+    android:layout_height="75dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:scaleType="centerCrop"/>
+
+  <TextView
+    android:id="@+id/repo_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@+id/user_avatar_image"
+    tools:text="Android RxMvp"/>
+
+  <TextView
+    android:id="@+id/repo_description"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/repo_name"
+    android:layout_toEndOf="@+id/user_avatar_image"
+    tools:text="Android RxMvp repo_description"/>
+
+  <TextView
+    android:id="@+id/repo_updated_at"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/repo_description"
+    android:layout_toEndOf="@+id/user_avatar_image"
+    tools:text="12th jan 2016"/>
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/user_avatar_image"
+    android:orientation="horizontal">
+
+    <TextView
+      android:id="@+id/repo_stars"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_marginStart="15dp"
+      android:layout_weight="1"
+      android:drawableEnd="@drawable/ic_icon_star"
+      android:gravity="center_vertical|end"
+      tools:text="1979"/>
+
+    <TextView
+      android:id="@+id/repo_forks"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_marginStart="15dp"
+      android:layout_weight="1"
+      android:drawableEnd="@drawable/ic_fork_icon"
+      android:gravity="center_vertical|end"
+      tools:text="64"/>
+
+    <TextView
+      android:id="@+id/repo_issues"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_marginStart="15dp"
+      android:layout_weight="1"
+      android:drawableEnd="@drawable/ic_error_outline_black_24dp"
+      android:gravity="center_vertical|end"
+      tools:text="21"/>
+
+  </LinearLayout>
+
+</RelativeLayout>
