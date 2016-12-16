@@ -1,8 +1,8 @@
 package com.twistedeqations.dagger2tutorial.screens.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +19,10 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressLint("ViewConstructor")
 public class RepoListItem extends FrameLayout {
+
+    private final Picasso picasso;
 
     @BindView(R.id.user_avatar)
     ImageView avatarImage;
@@ -44,27 +47,9 @@ public class RepoListItem extends FrameLayout {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.fullDate();
 
-    public RepoListItem(Context context) {
+    public RepoListItem(Context context, Picasso picasso) {
         super(context);
-        init();
-    }
-
-    public RepoListItem(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public RepoListItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init() {
+        this.picasso = picasso;
         inflate(getContext(), R.layout.list_item_repo, this);
         ButterKnife.bind(this);
     }
@@ -83,8 +68,7 @@ public class RepoListItem extends FrameLayout {
         updatedAt.setText(getResources()
                 .getString(R.string.last_pushed, DATE_TIME_FORMATTER.print(githubRepo.updatedAt)));
 
-        Picasso.with(getContext())
-                .load(githubRepo.owner.avatarUrl)
+        picasso.load(githubRepo.owner.avatarUrl)
                 .placeholder(R.drawable.ic_person_black_24dp)
                 .into(avatarImage);
     }

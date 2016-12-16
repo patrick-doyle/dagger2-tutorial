@@ -5,19 +5,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.squareup.picasso.Picasso;
 import com.twistedeqations.dagger2tutorial.models.GithubRepo;
+import com.twistedeqations.dagger2tutorial.screens.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class AdapterRepos extends BaseAdapter {
 
   private final List<GithubRepo> repoList = new ArrayList<>(0);
   private final Context context;
+  private final Picasso picasso;
 
-  public AdapterRepos(Context context) {
+  @Inject
+  public AdapterRepos(HomeActivity context, Picasso picasso) {
     this.context = context;
+    this.picasso = picasso;
   }
 
   @Override
@@ -44,7 +51,7 @@ public class AdapterRepos extends BaseAdapter {
   public View getView(int position, View convertView, ViewGroup parent) {
     RepoListItem repoListItem;
     if(convertView == null) {
-      repoListItem = new RepoListItem(context);
+      repoListItem = new RepoListItem(context, picasso);
     } else {
       repoListItem = RepoListItem.class.cast(convertView);
     }

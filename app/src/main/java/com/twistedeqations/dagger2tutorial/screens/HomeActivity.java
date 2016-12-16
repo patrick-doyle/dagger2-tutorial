@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.twistedeqations.dagger2tutorial.GithubApplication;
 import com.twistedeqations.dagger2tutorial.R;
 import com.twistedeqations.dagger2tutorial.models.GithubRepo;
@@ -12,6 +13,8 @@ import com.twistedeqations.dagger2tutorial.network.GithubService;
 import com.twistedeqations.dagger2tutorial.screens.home.AdapterRepos;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,10 +27,12 @@ public class HomeActivity extends AppCompatActivity {
   @BindView(R.id.repo_home_list)
   ListView listView;
 
-  GithubService githubService;
-
   Call<List<GithubRepo>> reposCall;
 
+  @Inject
+  GithubService githubService;
+
+  @Inject
   AdapterRepos adapterRepos;
 
   @Override
@@ -36,10 +41,14 @@ public class HomeActivity extends AppCompatActivity {
     setContentView(R.layout.activity_home);
     ButterKnife.bind(this);
 
-    adapterRepos = new AdapterRepos(this);
-    listView.setAdapter(adapterRepos);
+    HomeActivityComponent component = DaggerHomeActivityComponent.builder()
+            .homeActivityModule(new HomeActivityModule(this))
+            .githubApplicationComponent(GithubApplication.get(this).component())
+            .build();
 
-    githubService = GithubApplication.get(this).getGithubService();
+    component.injectHomeActivity(this);
+
+    listView.setAdapter(adapterRepos);
 
     reposCall = githubService.getAllRepos();
     reposCall.enqueue(new Callback<List<GithubRepo>>() {
